@@ -1,7 +1,7 @@
 About
 =======
 
-
+This parent POM sets up shared chekstyle, release and other configuration.
 
 Credits
 =======

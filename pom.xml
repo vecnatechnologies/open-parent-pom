@@ -1,0 +1,215 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!-- Copyright 2011 Vecna Technologies, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you
+may not use this file except in compliance with the License.  You may
+obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied.  See the License for the specific language governing
+permissions and limitations under the License.  -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.vecna.parent</groupId>
+  <artifactId>open-parent-pom</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.8-SNAPSHOT</version>
+  <name>Parent POM</name>
+  <organization>
+    <name>Vecna Technologies Inc.</name>
+    <url>http://www.vecna.com/</url>
+  </organization>
+  <scm>
+    <connection>scm:git:git://github.com/vecnatechnologies/open-parent-pom.git</connection>
+    <url>scm:git:git://github.com/vecnatechnologies/open-parent-pom.git</url>
+    <developerConnection>scm:git:git://github.com/vecnatechnologies/open-parent-pom.git</developerConnection>
+  </scm>
+  <inceptionYear>2009</inceptionYear>
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <distributionManagement>
+    <repository>
+      <id>releases</id>
+      <name>Sonatype OSS - Releases</name>
+      <url>https://oss.sonatype.org/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>Sonatype OSS - Releases</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <properties>
+    <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
+    <checkstyle.maxAllowedViolations>0</checkstyle.maxAllowedViolations>
+    <checkstyle.logViolationsToConsole>true</checkstyle.logViolationsToConsole>
+    <checkstyle.violationSeverity>error</checkstyle.violationSeverity>
+    <checkstyle.header>open-header.txt</checkstyle.header>
+    <java.version>1.6</java.version>
+  </properties>
+  <profiles>
+    <profile>
+      <id>checkstyle</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>2.6</version>
+            <executions>
+              <execution>
+                <id>default-checkstyle</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>checkstyle</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-checkstyle-check</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <configuration>
+                  <failOnViolation>${checkstyle.failOnViolation}</failOnViolation>
+                  <maxAllowedViolations>${checkstyle.maxAllowedViolations}</maxAllowedViolations>
+                  <logViolationsToConsole>${checkstyle.logViolationsToConsole}</logViolationsToConsole>
+                  <violationSeverity>${checkstyle.violationSeverity}</violationSeverity>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>${basedir}</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>LICENSE</include>
+          <include>README</include>
+          <include>NOTICE</include>
+        </includes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource> 
+        <directory>${basedir}/src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.6</version>
+        <inherited>true</inherited>
+        <dependencies>
+          <dependency>
+            <groupId>com.vecna.checkstyle</groupId>
+            <artifactId>open-checkstyle-rules</artifactId>
+            <version>2.2-SNAPSHOT</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <configLocation>open-checks.xml</configLocation>
+          <headerLocation>${checkstyle.header}</headerLocation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3</version>
+        <inherited>true</inherited>
+        <configuration>
+          <compilerArgument>-verbose</compilerArgument>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <verbose>true</verbose>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0-beta-8</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.6</version>
+        <inherited>true</inherited>
+        <configuration>
+          <configLocation>vecna-checks.xml</configLocation>
+          <headerLocation>${checkstyle.header}</headerLocation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jdepend-maven-plugin</artifactId>
+        <version>2.0-beta-2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.4.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <minimumTokens>100</minimumTokens>
+          <targetJdk>1.5</targetJdk>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.1.2</version>
+        <configuration>
+          <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>dashboard-maven-plugin</artifactId>
+        <version>1.0.0-beta-1</version>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

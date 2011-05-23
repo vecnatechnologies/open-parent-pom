@@ -36,8 +36,8 @@ permissions and limitations under the License.  -->
   </developers>
   <scm>
     <connection>scm:git:git://github.com/vecnatechnologies/open-parent-pom.git</connection>
-    <url>scm:git:git://github.com/vecnatechnologies/open-parent-pom.git</url>
-    <developerConnection>scm:git:git://github.com/vecnatechnologies/open-parent-pom.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:vecnatechnologies/open-parent-pom.git</developerConnection>
+    <url>https://github.com/vecnatechnologies/open-parent-pom</url>
   </scm>
   <inceptionYear>2009</inceptionYear>
   <licenses>

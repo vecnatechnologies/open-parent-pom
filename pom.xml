@@ -121,7 +121,7 @@ permissions and limitations under the License.  -->
           <dependency>
             <groupId>com.vecna.checkstyle</groupId>
             <artifactId>open-checkstyle-rules</artifactId>
-            <version>2.2-SNAPSHOT</version>
+            <version>2.2</version>
           </dependency>
         </dependencies>
         <configuration>

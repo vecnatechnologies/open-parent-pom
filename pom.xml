@@ -16,7 +16,7 @@ permissions and limitations under the License.  -->
   <groupId>com.vecna.parent</groupId>
   <artifactId>open-parent-pom</artifactId>
   <packaging>pom</packaging>
-  <version>2.1</version>
+  <version>2.2-SNAPSHOT</version>
   <name>Parent POM</name>
   <organization>
     <name>Vecna Technologies Inc.</name>

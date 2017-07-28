@@ -18,6 +18,8 @@ permissions and limitations under the License.  -->
   <packaging>pom</packaging>
   <version>2.2-SNAPSHOT</version>
   <name>Parent POM</name>
+  <description>Parent pom for all vecna open-source maven projects.</description>
+  <url>https://github.com/vecnatechnologies/open-parent-pom</url>
   <organization>
     <name>Vecna Technologies Inc.</name>
     <url>http://www.vecna.com/</url>

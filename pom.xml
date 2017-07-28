@@ -18,11 +18,6 @@ permissions and limitations under the License.  -->
   <packaging>pom</packaging>
   <version>2.1-SNAPSHOT</version>
   <name>Parent POM</name>
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
   <organization>
     <name>Vecna Technologies Inc.</name>
     <url>http://www.vecna.com/</url>
@@ -52,9 +47,56 @@ permissions and limitations under the License.  -->
     <checkstyle.logViolationsToConsole>true</checkstyle.logViolationsToConsole>
     <checkstyle.violationSeverity>error</checkstyle.violationSeverity>
     <checkstyle.header>open-header.txt</checkstyle.header>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
   </properties>
   <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>checkstyle</id>
       <build>
@@ -90,6 +132,16 @@ permissions and limitations under the License.  -->
       </build>
     </profile>
   </profiles>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
   <build>
     <resources>
       <resource>
@@ -112,6 +164,17 @@ permissions and limitations under the License.  -->
       </testResource>
     </testResources>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -149,6 +212,9 @@ permissions and limitations under the License.  -->
           <configuration>
             <tagNameFormat>@{project.version}</tagNameFormat>
             <autoVersionSubmodules>true</autoVersionSubmodules>
+            <useReleaseProfile>false</useReleaseProfile>
+            <releaseProfiles>release</releaseProfiles>
+            <goals>deploy</goals>
           </configuration>
         </plugin>
       </plugins>

@@ -216,7 +216,7 @@ permissions and limitations under the License.  -->
             <autoVersionSubmodules>true</autoVersionSubmodules>
             <useReleaseProfile>false</useReleaseProfile>
             <releaseProfiles>release</releaseProfiles>
-            <goals>deploy nexus-staging:release</goals>
+            <goals>deploy</goals>
           </configuration>
         </plugin>
       </plugins>
